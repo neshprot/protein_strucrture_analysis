@@ -1,0 +1,14 @@
+[project]
+name = "protein-strucrture-analysis"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "dotenv>=0.9.9",
+    "jupyter>=1.1.1",
+    "networkx>=3.4.2",
+    "pandas>=2.3.2",
+    "ruff>=0.13.1",
+    "scipy>=1.15.3",
+]
