@@ -1,13 +1,20 @@
 """
-Юнит-тесты для модуля PDBLoader.
+Исправленные юнит-тесты для модуля PDBLoader.
 
 Проверяет корректность загрузки и обработки PDB-файлов.
 """
 
 import pytest
 import os
+import sys
 import tempfile
+from pathlib import Path
+
 import pandas as pd
+
+# Добавляем корневую директорию проекта в path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from hydrogen_bonds_analyzer import PDBLoader
 
 
@@ -30,7 +37,7 @@ HETATM      8  O   GLY A   2      -3.412   1.185  -1.933  1.00  0.00           O
     @pytest.fixture
     def pdb_file(self, sample_pdb_content):
         """Создаёт временный PDB-файл."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.pdb', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.pdb', delete=False, encoding='utf-8') as f:
             f.write(sample_pdb_content)
             temp_path = f.name
         yield temp_path
@@ -88,7 +95,7 @@ HETATM      8  O   GLY A   2      -3.412   1.185  -1.933  1.00  0.00           O
     
     def test_empty_pdb_file(self):
         """Проверяет загрузку пустого PDB-файла."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.pdb', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.pdb', delete=False, encoding='utf-8') as f:
             f.write("")
             temp_path = f.name
         

@@ -1,5 +1,5 @@
 """
-Юнит-тесты для модуля TopologyLoader.
+Исправленные юнит-тесты для модуля TopologyLoader.
 
 Проверяет корректность загрузки и обработки файлов топологии.
 """
@@ -7,8 +7,13 @@
 import pytest
 import json
 import os
+import sys
 import tempfile
 from pathlib import Path
+
+# Добавляем корневую директорию проекта в path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from hydrogen_bonds_analyzer import TopologyLoader
 
 
@@ -39,7 +44,7 @@ class TestTopologyLoader:
     @pytest.fixture
     def topology_file(self, sample_topology):
         """Создаёт временный файл топологии."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
             json.dump(sample_topology, f)
             temp_path = f.name
         yield temp_path
@@ -85,7 +90,7 @@ class TestTopologyLoader:
     
     def test_invalid_json(self):
         """Проверяет обработку некорректного JSON."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
             f.write("{ invalid json content")
             temp_path = f.name
         
@@ -97,7 +102,7 @@ class TestTopologyLoader:
     
     def test_empty_topology(self):
         """Проверяет загрузку пустой топологии."""
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
             json.dump({}, f)
             temp_path = f.name
         
@@ -117,7 +122,7 @@ class TestTopologyLoader:
             }
         }
         
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
             json.dump(topology, f)
             temp_path = f.name
         
@@ -138,7 +143,7 @@ class TestTopologyLoader:
             }
         }
         
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False, encoding='utf-8') as f:
             json.dump(topology, f)
             temp_path = f.name
         
